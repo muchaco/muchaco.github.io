@@ -1,0 +1,589 @@
+1:"$Sreact.fragment"
+2:I[5031,["177","static/chunks/app/layout-21c33a181f19421f.js"],"ThemeProvider"]
+3:I[1063,[],""]
+4:I[1483,[],""]
+6:I[5125,[],"OutletBoundary"]
+9:I[5125,[],"ViewportBoundary"]
+b:I[5125,[],"MetadataBoundary"]
+d:I[1954,[],""]
+:HL["/_next/static/media/a34f9d1faa5f3315-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/bb3ef058b751a6ad-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/css/4e29a17bfdb9b290.css","style"]
+0:{"P":null,"b":"1oTw7mxl6mBu8h4DXhiLg","p":"","c":["","notes","CV"],"i":false,"f":[[["",{"children":["notes",{"children":[["slug","CV","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/4e29a17bfdb9b290.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"className":"__variable_d65c78 __variable_3c557b font-mono bg-background text-foreground dark","children":["$","$L2",null,{"attribute":"class","defaultTheme":"dark","enableSystem":false,"forcedTheme":"dark","children":["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],{"children":["notes",["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["slug","CV","d"],["$","$1","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L4",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L5","$undefined",null,["$","$L6",null,{"children":["$L7","$L8",null]}]]}],{},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","mCvJsgsEarIXS0SoAmw1Y",{"children":[["$","$L9",null,{"children":"$La"}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],["$","$Lb",null,{"children":"$Lc"}]]}],false]],"m":"$undefined","G":["$d","$undefined"],"s":false,"S":true}
+e:I[7950,["100","static/chunks/100-78027e4a7c99b08d.js","600","static/chunks/600-2b40eb8705cda6b6.js","493","static/chunks/493-20e65e1f949f342d.js","740","static/chunks/app/notes/%5Bslug%5D/page-e8ae56a572579422.js"],""]
+f:I[2611,["100","static/chunks/100-78027e4a7c99b08d.js","600","static/chunks/600-2b40eb8705cda6b6.js","493","static/chunks/493-20e65e1f949f342d.js","740","static/chunks/app/notes/%5Bslug%5D/page-e8ae56a572579422.js"],"Image"]
+10:I[7335,["100","static/chunks/100-78027e4a7c99b08d.js","600","static/chunks/600-2b40eb8705cda6b6.js","493","static/chunks/493-20e65e1f949f342d.js","740","static/chunks/app/notes/%5Bslug%5D/page-e8ae56a572579422.js"],"default"]
+11:T11b5,
+This is a note-style summary of some of the concepts from [[CodingGuide]].
+
+## Key Concepts
+
+### Functional Core, Imperative Shell (FCIS)
+- **Functional Core**: Pure functions only. No side effects, deterministic, testable.
+- **Imperative Shell**: Handles all I/O and side effects (e.g., reading input, writing output, DB calls, logging).
+- Core is called by the shell. The shell adapts real-world data into the core, then acts on core's output.
+
+### Stratified Design
+- System is structured into **layers** with varying purity:
+  - **Innermost**: Domain logic (pure)
+  - **Middle**: Application services / orchestration (mostly pure or effect description)
+  - **Outer shell**: Infrastructure, I/O, UI (impure)
+- Effects are pushed as far out as possible (top or bottom of call stack).
+- If impurity is needed mid-process → split process into alternating impure/pure layers (multi-layer sandwich).
+
+### Function Coloring
+- Mental model (or conventions) to **distinguish pure vs. impure functions**.
+- Pure functions:
+  - Always return the same output for same input.
+  - No interaction with global state, I/O, time, randomness, etc.
+  - Can be replaced by a **lookup table (hashtable)**.
+- Impure functions:
+  - Depend on or modify external world.
+  - Infect purity — if a pure function calls impure code, it becomes impure.
+- Convention-based coloring is essential in languages without effect types (e.g., F#, JS, Python).
+- E.g. in languages with `async` functions, those often (not always) imply side effects.
+
+## Design Guidelines
+
+### Purity Separation
+- Separate pure and impure code by:
+  - **Module boundaries**
+  - **Project structure**
+  - **No importing of impure APIs in pure layers**
+- Core logic must not depend on I/O libraries or external APIs.
+
+### Composition Pattern
+- FCIS architecture follows:
+  1. Impure Input (e.g., read input, fetch data)
+  2. Pure Core Logic (transform inputs → decisions/data)
+  3. Impure Output (e.g., display result, write to DB)
+
+### Validation Before Core
+- Input validation, sanitization, and conversion are **preprocessing tasks**.
+- Validation belongs to the **shell**, not the core.
+- Core assumes inputs are already valid and well-formed.
+
+### Explicit Dependencies
+- All dependencies should be passed in via **function arguments**.
+- Avoid hidden dependencies (globals, singletons, implicit context).
+- Keeps core referentially transparent and testable.
+
+### Error Handling
+- Avoid throwing exceptions in the core.
+- Use **result types** (e.g., Result/Option/Either) to represent errors explicitly.
+- Shell interprets and handles the result.
+
+### Dependency Direction
+- Impure shell depends on the core.
+- Core must not call impure shell code or rely on runtime state.
+
+## Testing Strategy
+
+### Pure Core (Deterministic Logic)
+- Validated with **unit tests**.
+- No mocks or stubs needed.
+- Fast, stable, and exhaustive test coverage possible.
+
+### Imperative Shell (I/O orchestration)
+- Validated with **integration tests**.
+- If you need mocks or stubs, it's **not a unit test**.
+- Tests should verify:
+  - That orchestration calls into the core correctly.
+  - That side effects happen in the right order with the right data.
+- Shell tests are fewer and focus on **glue**, not **business logic**.
+
+## Practical Tips
+
+- Functions returning `unit` (or void) often indicate impurity.
+- Avoid side effects in loops or deep logic — isolate to shell.
+- Refactor mid-logic impurity by moving it to the layer above and passing data downward.
+- Use types and conventions to encode expectations around purity.
+
+## Related Architectural Styles
+- Onion Architecture
+- Hexagonal Architecture
+- Ports and Adapters
+- Clean Architecture
+
+## Mental Models
+- Think in terms of a **sandwich** or **onion**:
+  - I/O layer → pure decision → I/O layer
+- Each impure layer services the layer beneath with needed data and performs actions from its outputs.
+
+## Summary
+- Keep side effects isolated.
+- Build deterministic cores.
+- Handle real-world effects in boundary code.
+- Make purity/impurity boundaries explicit and respected.
+- Aim for core logic that could be memoized via a hashtable.
+- Test logic and glue differently and appropriately.
+
+```python
+# Pseudo-illustration
+def run():
+    # impure: read input
+    user_input = read_console()
+
+    # validate, boolean guard or typed parser
+    if not is_valid(user_input):
+        print("Invalid input")
+        return
+
+    # pure: compute something
+    result = pure_logic(user_input)
+
+    # impure: show result
+    print(result)
+```
+12:T822,
+This is far from a comprehensive list. However, after starting the digital garden, I began revisiting old talks that influenced me, along with other resources. From now on, I will update this to become a properly curated list.
+
+## Resources
+
+- https://roadmap.sh/
+- https://learnxinyminutes.com/
+- https://refactoring.guru/
+- https://overapi.com/
+
+## Articles, Blog posts
+
+- https://dev.to/code42cate/stop-using-docker-like-its-2015-1o5l
+
+## Videos / Talks
+
+- Side-Effects Are The Complexity Iceberg • Kris Jenkins • YOW! 2024 - https://youtu.be/_nG09Z_tdUU?si=KM-vQ2-zsRGeffDL
+- Unexpected Monad. Is Safe Error Handling Possible in JS/TS? by Artem Kobzar and Dmitry Makhnev - https://youtu.be/SLOhXSeNKCM?si=6D3Lfy3JEYiQF9nv
+- Program with GUTS - Kevlin Henney | Craft Conference 2024 - https://youtu.be/4TvqzIJdFPk?si=i1sIAqEfBw1rmLBz
+- Douglas Crockford: JavaScript: The Good Parts - https://youtu.be/_DKkVvOt6dk?si=P13LpsUtK1gTHzSD
+- James Powell: So you want to be a Python expert? | PyData Seattle 2017 - https://youtu.be/cKPlPJyQrt4?si=4IG9ZGX1f5VNDwvV
+- "Simple Made Easy" - Rich Hickey (2011) - https://youtu.be/SxdOUGdseq4?si=hCZ6uPwnm6PecP1h
+- Ruby Conf 12 - Boundaries by Gary Bernhardt - https://youtu.be/yTkzNHF6rMs?si=ZTXP15jW46hugvKd
+- Moving IO to the edges of your app: Functional Core, Imperative Shell - Scott Wlaschin - https://youtu.be/P1vES9AgfC4?si=p7Y2qX4D8lh-PfOf
+
+## Creators
+
+- Lydia Hallie: https://www.lydiahallie.com/
+- Theo Brown: https://www.youtube.com/@t3dotgg
+- Eric Normand: https://www.youtube.com/@ericnormand4210
+- Fireship: https://www.youtube.com/@Fireship
+- Code Aesthetic: https://www.youtube.com/@CodeAesthetic
+- Internet of Bugs: https://www.youtube.com/@InternetOfBugs
+- Richard Feldman: https://x.com/rtfeldman
+- Scott Wlaschin: https://fsharpforfunandprofit.com/
+
+## Books
+
+- Professor Frisby's Mostly Adequate Guide to Functional Programming: https://mostly-adequate.gitbook.io/mostly-adequate-guide
+- Eric Normand: Grokking Simplicity: https://grokkingsimplicity.com/
+
+## Podcasts
+
+- Syntax: https://www.youtube.com/@syntaxfm
+13:T15d1,
+## Rules and Mindset
+
+1. YAGNI — You Aren't Gonna Need It
+   - Don't build for imagined future needs
+   - Only design and implement what's needed today
+   - Cuts unnecessary abstractions, overengineering
+   - Championed by: Extreme Programming (XP), DHH, Greg Young
+
+2. KISS — Keep It Simple, Stupid
+   - Simplicity > Elegance
+   - Prefer a straightforward solution over a theoretically "perfect" abstraction
+   - "Simple" means easy to understand, easy to modify, not just fewer lines of code
+
+3. DRY — Don't Repeat Yourself
+   - Avoid code duplication
+   - Extract common patterns into reusable components
+   - But don't over-abstract (see YAGNI)
+   - Balance with WET (Write Everything Twice) when appropriate
+
+4. SOC — Separation of Concerns
+   - Each component should have a single, well-defined purpose
+   - Keep different aspects of the system (UI, business logic, data access) separate
+   - Makes code more maintainable and testable
+
+5. SRP — Single Responsibility Principle
+   - A class/module/function should have only one reason to change
+   - Each component should do one thing and do it well
+   - Helps prevent tight coupling and makes code more maintainable
+
+6. Data-Oriented Design (DOD)
+   - Prefer plain data structures (e.g., JSON, plain objects) over classes and inheritance trees
+   - Functions should operate on explicit, visible data, rather than hiding state inside objects
+
+7. Functional Core, Imperative Shell
+   - Keep core logic pure and stateless (functions, calculations)
+   - Push side effects (I/O, DB writes, UI updates) to the edges of the system
+   - Makes systems easier to test, debug, and extend
+
+8. Composition Over Inheritance (COI)
+   - Prefer composing small reusable behaviors (functions, modules) over building complex class hierarchies
+   - Instead of rigid "is-a" relations (OOP), use "has-a" or "can-do" relations
+
+9. Explicit Over Implicit
+   - Make code behavior obvious and self-documenting
+   - Avoid "magic" or hidden behavior
+   - Prefer explicit configuration over convention
+   - Makes code easier to understand and maintain
+
+10. Pure Methods Over Side Effects
+    - Prefer pure functions that always return the same output for the same input
+    - Minimize side effects and state mutations
+    - Makes code more predictable and testable
+    - Push side effects to the edges of the system
+
+11. Fail Fast
+    - Detect and report errors as early as possible
+    - Don't let errors propagate through the system
+    - Validate inputs at system boundaries
+    - Makes debugging easier and prevents cascading failures
+
+12. Stratified Design
+    - Organize code into layers of abstraction
+    - Each layer should only depend on layers below it
+    - Higher layers provide more abstract interfaces
+    - Helps manage complexity in large systems
+
+13. Poka-Yoke Engineering ("Error-proofing")
+    - Design APIs and systems so that wrong usage is naturally prevented
+    - Example: Use types to make invalid states impossible (TypeScript, Rust enums, etc.)
+    - Goal: Prevent bugs at design time, not just catch them at runtime
+
+14. The Principle of Least Power
+    - Use the simplest possible language/construct that gets the job done
+    - E.g., prefer plain configuration over full code execution if possible
+    - Reduces unexpected behaviors, increases predictability
+
+15. Design for Readability, Not Reusability
+    - Prioritize making code understandable to a future human, rather than trying to make everything reusable upfront
+    - Premature generalization ("this will probably be reused later") is seen as a common cause of overengineering
+
+## Laws
+
+### Gall's Law
+
+"A complex system that works is invariably found to have evolved from a simple system that worked."
+
+   - Start simple
+   - Don't try to design complex systems from scratch — they almost always fail
+   - Let complexity emerge gradually through evolution
+
+Use case: MVPs, architecture planning, scaling strategies
+
+### Chesterton's Fence
+
+"Don't remove or refactor something until you understand why it was put there in the first place."
+
+   - Before deleting "weird" or "ugly" code, ask why it exists
+   - Old code may be solving an invisible but critical problem
+
+Use case: Legacy system maintenance, refactoring decisions
+
+### Hyrum's Law
+
+"With a sufficient number of users of an API, it does not matter what you promise in the contract: all observable behaviors will be depended on by somebody."
+
+   - No matter what you document, someone will depend on your bugs or quirks
+   - Be extremely careful with "breaking changes" even if technically justified
+
+Use case: API design, versioning strategies
+
+### The Pareto Principle (80/20 Rule)
+
+"80% of consequences come from 20% of causes."
+
+   - Focus optimization/effort on the few parts that matter most
+   - Not all code deserves the same level of optimization, testing, or abstraction
+
+Use case: Performance optimization, tech debt prioritization
+
+### Postel's Law (Robustness Principle)
+
+"Be conservative in what you do, be liberal in what you accept from others."
+
+   - Your system should generate strict, predictable outputs
+   - But accept messy, imperfect inputs (when possible) to avoid fragility
+
+Use case: API design, parsing external data, user input handling
+
+### Law of Leaky Abstractions
+
+"All non-trivial abstractions, to some degree, are leaky."
+
+   - Abstractions can't hide every underlying complexity
+   - Eventually, you'll need to understand what's under the abstraction
+   - Don't over-rely on "magic" libraries or frameworks
+
+Use case: Choosing cloud services, ORMs, libraries14:T65b,
+## 📖 Introduction
+I have been struggling with my health for a long time. My daughter was born in 2023, and since then, I have no time, and energy to take care of myself. Right before she was born, my progress already started to slow down, but I was still able to run almost daily. However, after she was born, I had no time to run, and I started to gain weight. Lifting her up, and carrying her around without warmups made my back hurt over time. I started to feel weak, and tired all the time. Although sleep deprivation did not help either. Losing control over my health made me feel demotivated, and I started to eat badly and drinking soda all the time.
+
+Recently I feel like I have the opportunity to take back control of my health. I sleep better, and I have more time to take care of myself. Also I am feeling bad in my body and I am tired of it. I was always a fit person, and a health advocate. I have certified as a personal trainer, so it is time to act as one.
+
+## 🗒️ Weekly Habits Plan
+- [x] **Week 1:** 🚱 Ditch soda and sugary drinks. Only water, unsweetened tea, and coffee.
+- [x] **Week 2:** 🥣 Get my breakfast healthy again with oatmeal, fruits, nuts and seeds.
+- [ ] **Week 3:** ⏰ Start time‑restricted eating with a window from 8 AM to 6 PM.
+- [ ] **Week 4:** 🚶 Wake up 20 minutes earlier and go for a power walk in the morning.
+
+## 🎯 Goals & Next Steps
+- Build consistency with these first four habits.
+- From Week 5 onward, introduce strength training, mobility work, and stress‑management techniques.
+- Track progress weekly and adjust as needed to keep motivation high.
+15:Te2a,
+# Ádám István Mészáros
+
+**Senior Software Engineer · Mathematician**  
+Budapest, Hungary  
+
+---
+
+## 🎓 Education
+
+**Bachelor’s Degree in Mathematical Analysis**  
+_Eötvös Loránd University, 2010 – 2013_
+
+**Internet Application Developer**  
+_2F Iskola Kft., 2009 – 2010_
+
+---
+
+## 📜 Certificates
+
+- English – “C” type, level B2  
+- ISTQB CTFL – 88%  
+- ISTQB CTAL-TTA – 83%
+
+---
+
+## 💻 Programming Languages & Technologies
+
+Python, Bash, SQL, Javascript, TypeScript, Apex (salesforce)
+
+---
+
+## 🛠️ Software & Tools
+
+GNU/Linux, Git, Docker, AWS, Serverless, Terraform, Jira, Confluence, VSCode
+
+---
+
+## 🔍 Values & Soft Skills
+
+- Strong sense of duty  
+- Analytical and critical thinking  
+- Creative problem solver  
+- Strong empathy
+
+---
+
+## 🎯 Experience
+
+### **Yext**
+
+**Senior Software Engineer**
+_November 2024 -_
+- Acted as the most senior engineer on the team responsible for the Salesforce-based client application for compliant texting in the financial sector  
+- Took initiative in identifying technical debt, proposing architectural improvements, and suggesting innovation opportunities  
+- Kept the team aligned with modern engineering practices by researching and sharing relevant tech trends  
+- Contributed to long-term codebase maintainability and development efficiency across JavaScript, LWC, and Apex
+
+**Software Engineer**
+_August 2024 - November 2024_
+- Developed and maintained a Salesforce client application for the company’s SaaS product  
+- Implemented features using JavaScript, Lightning Web Components (LWC), and Apex  
+- Designed and built an end-to-end regression testing framework using WebdriverIO and UTAM  
+- Ensured feature quality and compliance with industry regulations
+
+### **Hearsay**
+
+**Software Engineer**
+_March 2022 - August 2024_
+- Developed a cloud-based synchronization engine integrating CRM systems, archiving tools, and the company’s main SaaS platform  
+- Built on a fully serverless, event-driven microservice architecture leveraging AWS services (e.g., Lambda, SQS, EventBridge, DynamoDB, etc.)  
+- Contributed across the full stack, including product logic, Infrastructure as Code (IaC), and CI pipelines  
+- Designed and implemented new integration targets, and created scalable configurations for large enterprise customers
+
+### **One Identity, Budapest**
+
+**Senior Quality Assurance Engineer**  
+_April 2021 – February 2022_  
+- Led automated and manual E2E test processes (IPv6, Splunk, Azure disk handling)  
+- Improved QA strategies and processes  
+- Acted as the final quality gate
+
+**Quality Assurance Engineer**  
+_January 2018 – April 2021_  
+- Continued QA work on Syslog-ng Store Box post-acquisition  
+- Enhanced automated testing framework and infrastructure  
+- Contributed to ongoing test strategy improvements
+
+### **Balabit, Budapest**
+
+**Quality Assurance Engineer**  
+_March 2017 – January 2018_  
+- Worked on Syslog-ng Store Box (central log management software)  
+- Implemented and stabilized automated Selenium tests (Python)  
+- Performed manual testing and maintained test infrastructure (ESXi, AWS EC2, Azure)  
+
+### **Nokia Networks, Budapest**
+
+**Software Engineer**  
+_May 2013 – March 2017_  
+- **Functional Tester**: automated & manual functional testing, regression testing  
+- **Test Environment Officer**: rebuilt automated test environment, handled test infra issues  
+- **Feature Component Test Leader**: test design, coordination, stakeholder communication  
+- Designed and implemented a SUT configuration management tool  
+- Participated in system testing and environment planning
+16:T44d,
+## About Me
+
+I’m Ádám Mészáros from Hungary — a proud father, loving husband, senior software engineer with a BSc in mathematics, and a peaceful vegan.
+
+Welcome to my Digital Garden — a living, evolving space for my most relevant thoughts and notes. It’s a snapshot of my mind: what matters to me, what keeps me up at night, and how I see the world and tech. I grow ideas here in the open, refine them over time, and occasionally prune what no longer fits.
+
+For my professional info check my [[CV]].
+
+### Hobbies
+
+- Reading (fictions)
+- Hiking
+- Coding
+- Board games
+- Fitness
+
+### Interests
+
+- Politics
+- Science
+- Coffee
+- Fitness and Health
+- Tech and Coding
+- Animal rights
+
+## Contact Me
+
+Thanks for visiting my digital garden! If you'd like to get in touch, here are the best ways to reach me:
+
+### Email
+
+You can email me at: **adam_meszaros@outlook.hu**
+
+### Social Media
+
+- **X**: [@AdamMeszar17463](https://twitter.com/AdamMeszar17463)
+- **GitHub**: [muchaco](https://github.com/muchaco)
+- **LinkedIn**: [linkedin-profile](https://linkedin.com/in/ádám-mészáros-89a16a204/)
+
+17:Te2a,
+# Ádám István Mészáros
+
+**Senior Software Engineer · Mathematician**  
+Budapest, Hungary  
+
+---
+
+## 🎓 Education
+
+**Bachelor’s Degree in Mathematical Analysis**  
+_Eötvös Loránd University, 2010 – 2013_
+
+**Internet Application Developer**  
+_2F Iskola Kft., 2009 – 2010_
+
+---
+
+## 📜 Certificates
+
+- English – “C” type, level B2  
+- ISTQB CTFL – 88%  
+- ISTQB CTAL-TTA – 83%
+
+---
+
+## 💻 Programming Languages & Technologies
+
+Python, Bash, SQL, Javascript, TypeScript, Apex (salesforce)
+
+---
+
+## 🛠️ Software & Tools
+
+GNU/Linux, Git, Docker, AWS, Serverless, Terraform, Jira, Confluence, VSCode
+
+---
+
+## 🔍 Values & Soft Skills
+
+- Strong sense of duty  
+- Analytical and critical thinking  
+- Creative problem solver  
+- Strong empathy
+
+---
+
+## 🎯 Experience
+
+### **Yext**
+
+**Senior Software Engineer**
+_November 2024 -_
+- Acted as the most senior engineer on the team responsible for the Salesforce-based client application for compliant texting in the financial sector  
+- Took initiative in identifying technical debt, proposing architectural improvements, and suggesting innovation opportunities  
+- Kept the team aligned with modern engineering practices by researching and sharing relevant tech trends  
+- Contributed to long-term codebase maintainability and development efficiency across JavaScript, LWC, and Apex
+
+**Software Engineer**
+_August 2024 - November 2024_
+- Developed and maintained a Salesforce client application for the company’s SaaS product  
+- Implemented features using JavaScript, Lightning Web Components (LWC), and Apex  
+- Designed and built an end-to-end regression testing framework using WebdriverIO and UTAM  
+- Ensured feature quality and compliance with industry regulations
+
+### **Hearsay**
+
+**Software Engineer**
+_March 2022 - August 2024_
+- Developed a cloud-based synchronization engine integrating CRM systems, archiving tools, and the company’s main SaaS platform  
+- Built on a fully serverless, event-driven microservice architecture leveraging AWS services (e.g., Lambda, SQS, EventBridge, DynamoDB, etc.)  
+- Contributed across the full stack, including product logic, Infrastructure as Code (IaC), and CI pipelines  
+- Designed and implemented new integration targets, and created scalable configurations for large enterprise customers
+
+### **One Identity, Budapest**
+
+**Senior Quality Assurance Engineer**  
+_April 2021 – February 2022_  
+- Led automated and manual E2E test processes (IPv6, Splunk, Azure disk handling)  
+- Improved QA strategies and processes  
+- Acted as the final quality gate
+
+**Quality Assurance Engineer**  
+_January 2018 – April 2021_  
+- Continued QA work on Syslog-ng Store Box post-acquisition  
+- Enhanced automated testing framework and infrastructure  
+- Contributed to ongoing test strategy improvements
+
+### **Balabit, Budapest**
+
+**Quality Assurance Engineer**  
+_March 2017 – January 2018_  
+- Worked on Syslog-ng Store Box (central log management software)  
+- Implemented and stabilized automated Selenium tests (Python)  
+- Performed manual testing and maintained test infrastructure (ESXi, AWS EC2, Azure)  
+
+### **Nokia Networks, Budapest**
+
+**Software Engineer**  
+_May 2013 – March 2017_  
+- **Functional Tester**: automated & manual functional testing, regression testing  
+- **Test Environment Officer**: rebuilt automated test environment, handled test infra issues  
+- **Feature Component Test Leader**: test design, coordination, stakeholder communication  
+- Designed and implemented a SUT configuration management tool  
+- Participated in system testing and environment planning
+5:["$","main",null,{"className":"min-h-screen flex flex-col","children":[["$","header",null,{"className":"border-b border-gold/20 h-12 flex items-center px-4 sticky top-0 bg-background z-10 md:flex hidden","children":[["$","$Le",null,{"href":"/","className":"text-gold font-mono flex items-center space-x-2","children":["$","span",null,{"className":"text-gold","children":"~/garden"}]}],["$","div",null,{"className":"ml-auto flex items-center space-x-4","children":[["$","$Le",null,{"href":"/graph","className":"text-muted-foreground hover:text-gold transition-colors flex items-center gap-1","title":"View note connections graph","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-network h-4 w-4","children":[["$","rect","4q2zg0",{"x":"16","y":"16","width":"6","height":"6","rx":"1"}],["$","rect","8cvhb9",{"x":"2","y":"16","width":"6","height":"6","rx":"1"}],["$","rect","1egb70",{"x":"9","y":"2","width":"6","height":"6","rx":"1"}],["$","path","1jsf9p",{"d":"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"}],["$","path","2874zd",{"d":"M12 12V8"}],"$undefined"]}],["$","span",null,{"className":"text-sm","children":"Graph"}]]}],["$","$Le",null,{"href":"/notes/me","className":"flex items-center hover:opacity-80 transition-opacity","title":"Me","children":["$","div",null,{"className":"relative w-8 h-8 overflow-hidden rounded-md border border-gold/30","children":["$","$Lf",null,{"src":"/images/pxl-me.webp","alt":"Pixel art portrait","width":32,"height":32,"className":"object-cover"}]}]}]]}]]}],["$","$L10",null,{"notes":[{"slug":"MyThoughtsOnCleanArchitecture","title":"My Take on Clean Code & Architecture","content":"$11","category":"Coding","tags":["professional","code"],"status":"budding","createdAt":"2025-05-18T16:30:00Z","updatedAt":"2025-05-18T16:30:00Z"},{"slug":"CodeFavorites","title":"Coding Favorites","content":"$12","category":"Coding","tags":["code","professional"],"status":"seedling","createdAt":"2025-04-24T09:50:00Z","updatedAt":"2025-05-08T15:41:00Z"},{"slug":"CodingGuide","title":"Coding Style","content":"$13","category":"Coding","tags":["code","professional"],"status":"seedling","createdAt":"2025-05-08T09:50:00Z","updatedAt":"2025-05-08T09:50:00Z"},{"slug":"MyHealth","title":"Taking Back Control of My Health","content":"$14","category":"Fitness","tags":["personal","health","fitness","progress"],"status":"budding","createdAt":"2025-04-22T09:40:00Z","updatedAt":"2025-05-07T23:40:00Z"},{"slug":"CV","title":"CV","content":"$15","category":"About","tags":["cv","professional"],"status":"mature","createdAt":"2025-04-20T10:00:00Z","updatedAt":"2025-04-20T10:00:00Z"},{"slug":"me","title":"Me","content":"$16","category":"About","tags":["contact","personal"],"status":"mature","createdAt":"2025-04-20T10:00:00Z","updatedAt":"2025-04-20T10:00:00Z"}],"currentNote":{"slug":"CV","title":"CV","content":"$17","category":"About","tags":"$5:props:children:1:props:notes:4:tags","status":"mature","createdAt":"2025-04-20T10:00:00Z","updatedAt":"2025-04-20T10:00:00Z"}}]]}]
+a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=1"}]]
+7:null
+8:null
+c:[["$","title","0",{"children":"Digital Garden"}],["$","meta","1",{"name":"description","content":"A techy digital garden built with Next.js"}],["$","meta","2",{"name":"generator","content":"v0.dev"}]]
